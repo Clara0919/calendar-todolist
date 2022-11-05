@@ -1,97 +1,97 @@
 <template lang="">
-    <!-- 新增任務 -->
-    <div><h1>Clara's TodoList</h1></div>
-    <div>
-      <!-- <p>日期：{{date}}</p> -->
-      <form @submit.prevent="addNewTask">
-        <!--  -->
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">任務</span>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="請填寫任務內容"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            v-model.trim="taskName"
-            
-          />
-          <button type="submit" class="btn btn-primary" >新增</button>
-        </div>
-      </form>
-    </div>
-    
-    <!-- 檢視任務 -->
-    <div>
-      <ul class="list-group">
-          <!-- <template  v-for="item in todoList">  -->
-            <!-- 分別取出每日的任務清單(一天是一組) -->
-          <li
-          class="list-group-item d-flex justify-content-between align-items-center"
-          v-for="mission in filterTodo"
-          :key="mission.id"
-        >
-        <!-- 從當日取出每個待辦事項 -->
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-             
-              v-model="mission.done"
-            />
-            <!-- :id="mission.id"  -->
-            
-            <!-- 這邊只需要使用 v-model 而不用再處理 emit 是因為 array 是複雜屬性 傳址而非傳值（非複製一份資料）所以可以直接修改到原資料 -->
-            <!-- id="flexCheckDefault" -->
-            <label
-              class="form-check-label"
-              :class="{ delete: mission.done }"
-              ><!-- for="flexCheckDefault" :for="item.todo.id" -->
-              <!-- :class="item.done?'delete':''" -->
-              {{ mission.task }}
-            </label>
-          </div>
-          <span class="badge bg-success rounded-pill" v-if="mission.done"
-            >已完成</span
-          >
-          <span class="badge bg-warning rounded-pill" v-else>未完成</span>
-        </li>
-             
-          <!-- </template> -->
-       
-      </ul>
-    </div>
+  <!-- 新增任務 -->
+  <div><h1>Clara's TodoList</h1></div>
+  <div>
+    <!-- <p>日期：{{date}}</p> -->
+    <form @submit.prevent="addNewTask">
+      <!--  -->
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">任務</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="請填寫任務內容"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          v-model.trim="taskName"
+          
+        />
+        <button type="submit" class="btn btn-primary" >新增</button>
+      </div>
+    </form>
+  </div>
   
-    <!-- 篩選任務 -->
-    <!-- <div class="btn-group mt-3" role="group" aria-label="Basic example">
-      <button
-        type="button"
-        class="btn"
-        :class="activeCode === 0 ? 'btn-primary' : 'btn-secondary'"
-        @click="btnClick(0)"
-      >
-        全部
-      </button>
-      <button
-        type="button"
-        class="btn"
-        :class="activeCode === 1 ? 'btn-primary' : 'btn-secondary'"
-        @click="btnClick(1)"
-      >
-        已完成
-      </button>
-      <button
-        type="button"
-        class="btn"
-        :class="activeCode === 2 ? 'btn-primary' : 'btn-secondary'"
-        @click="btnClick(2)"
-      >
-        未完成
-      </button>
-    </div> -->
-  </template>
-  <script>
+  <!-- 檢視任務 -->
+  <div>
+    <ul class="list-group">
+        <!-- <template  v-for="item in todoList">  -->
+          <!-- 分別取出每日的任務清單(一天是一組) -->
+        <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+        v-for="mission in filterTodo"
+        :key="mission.taskName"  
+      > 
+      <!-- mission.id -->
+      <!-- 從當日取出每個待辦事項 -->
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            v-model="mission.done"
+          />
+          <!-- :id="mission.id"  -->
+          
+          <!-- 這邊只需要使用 v-model 而不用再處理 emit 是因為 array 是複雜屬性 傳址而非傳值（非複製一份資料）所以可以直接修改到原資料 -->
+          <!-- id="flexCheckDefault" -->
+          <label
+            class="form-check-label"
+            :class="{ delete: mission.done }"
+            ><!-- for="flexCheckDefault" :for="item.todo.id" -->
+            <!-- :class="item.done?'delete':''" -->
+            {{ mission.task }}
+          </label>
+        </div>
+        <span class="badge bg-success rounded-pill" v-if="mission.done"
+          >已完成</span
+        >
+        <span class="badge bg-warning rounded-pill" v-else>未完成</span>
+      </li>
+           
+        <!-- </template> -->
+     
+    </ul>
+  </div>
+
+  <!-- 篩選任務 -->
+  <!-- <div class="btn-group mt-3" role="group" aria-label="Basic example">
+    <button
+      type="button"
+      class="btn"
+      :class="activeCode === 0 ? 'btn-primary' : 'btn-secondary'"
+      @click="btnClick(0)"
+    >
+      全部
+    </button>
+    <button
+      type="button"
+      class="btn"
+      :class="activeCode === 1 ? 'btn-primary' : 'btn-secondary'"
+      @click="btnClick(1)"
+    >
+      已完成
+    </button>
+    <button
+      type="button"
+      class="btn"
+      :class="activeCode === 2 ? 'btn-primary' : 'btn-secondary'"
+      @click="btnClick(2)"
+    >
+      未完成
+    </button>
+  </div> -->
+</template>
+<script>
 import { mapGetters } from "vuex"; //, mapActions
 export default {
   data() {
@@ -124,12 +124,12 @@ export default {
       } else {
         let selectDate = this.$store.state.pickDate;
         console.log("selectDate測試", selectDate);
-        if (localStorage.key(selectDate) === selectDate) {
-          // let todoList=this.$store.state.todoList
+        if (localStorage.key(selectDate) == selectDate) {
           console.log("這筆資料已存在");
           this.getTodo = JSON.parse(localStorage.getItem(selectDate));
           this.getTodo.push({
             id: this.getTodo.length + 1,
+            //因為v-for 的 key 用 taskName 所以如果任務重複的話 id 會亂掉
             task: this.taskName,
             done: false,
           });
@@ -169,7 +169,7 @@ export default {
   },
 };
 </script>
-  <style scoped>
+<style scoped>
 /* 新增任務 */
 
 .input-group {
@@ -191,4 +191,3 @@ export default {
   width: 400px;
 }
 </style>
-  
