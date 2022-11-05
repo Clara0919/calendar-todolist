@@ -24,11 +24,11 @@
     <!-- 檢視任務 -->
     <div>
       <ul class="list-group">
-          <template  v-for="item in todoList"> 
+          <!-- <template  v-for="item in todoList">  -->
             <!-- 分別取出每日的任務清單(一天是一組) -->
           <li
           class="list-group-item d-flex justify-content-between align-items-center"
-          v-for="mission in item.todo"
+          v-for="mission in filterTodo"
           :key="mission.id"
         >
         <!-- 從當日取出每個待辦事項 -->
@@ -37,18 +37,17 @@
               class="form-check-input"
               type="checkbox"
               value=""
-              :id="mission.id"
+             
               v-model="mission.done"
             />
-            <!--  -->
+            <!-- :id="mission.id"  -->
             
             <!-- 這邊只需要使用 v-model 而不用再處理 emit 是因為 array 是複雜屬性 傳址而非傳值（非複製一份資料）所以可以直接修改到原資料 -->
             <!-- id="flexCheckDefault" -->
             <label
               class="form-check-label"
               :class="{ delete: mission.done }"
-              :for="item.todo.id"
-              ><!-- for="flexCheckDefault" -->
+              ><!-- for="flexCheckDefault" :for="item.todo.id" -->
               <!-- :class="item.done?'delete':''" -->
               {{ mission.task }}
             </label>
@@ -59,7 +58,7 @@
           <span class="badge bg-warning rounded-pill" v-else>未完成</span>
         </li>
              
-          </template>
+          <!-- </template> -->
        
       </ul>
     </div>
@@ -99,35 +98,54 @@ export default {
     return {
       activeCode: 0,
       taskName: "",
-      // selectDate: "",
       getTodo: [],
     };
   },
-  computed: mapGetters({
-    //mapGetters 用來把 this.$store.getters.getTask 映射成 getTask
-    todoList: "getTodoList",
-    // date: "getDate",
-  }),
+
+  watch: {},
+
+  computed: {
+    filterTodo() {
+      let selectDate = this.$store.state.pickDate;
+      return JSON.parse(localStorage.getItem(selectDate));
+    },
+    ...mapGetters({
+      //...是展開運算符
+      //mapGetters 用來把 this.$store.getters.getTask 映射成 getTask
+      todoList: "getTodoList",
+      // date: "getDate",
+    }),
+  },
+
   methods: {
     addNewTask() {
       if (this.taskName === "") {
         return alert("任務欄位不得為空");
       } else {
         let selectDate = this.$store.state.pickDate;
-        if (localStorage.key(selectDate)) {
+        console.log("selectDate測試", selectDate);
+        if (localStorage.key(selectDate) === selectDate) {
           // let todoList=this.$store.state.todoList
-
+          console.log("這筆資料已存在");
           this.getTodo = JSON.parse(localStorage.getItem(selectDate));
-          // this.getTodo.push({
-          //   task: this.taskName,
-          //   done: false,
-          // });
-
-          // console.log(this.$store.state.todoList);
+          this.getTodo.push({
+            id: this.getTodo.length + 1,
+            task: this.taskName,
+            done: false,
+          });
+          // console.log("getTodo 測試", this.getTodo);
+          localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
+        } else {
+          this.getTodo = [
+            {
+              id: this.getTodo.length + 1,
+              task: this.taskName,
+              done: false,
+            },
+          ]; //getTodo 如果是 null 的話 沒辦法用 push
+          localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
         }
-        console.log("getTodo 測試", this.getTodo);
-        this.getTodo = [{ task: this.taskName, done: false }];
-        localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
+
         // console.log(this.$store.state.todoList);
       }
     },
