@@ -1,46 +1,63 @@
-import { createStore } from "vuex";
+import Vuex from 'vuex';
 
-const store = createStore({
+const store = new Vuex.Store({
   state: {
-    //data
+    nowDate:"",
+    pickDate:"",
     todoList: [
-      {
-        date: "2022-10-13",
-        todo: [
-          { id: 1, task: "每天早上餵Boba", done: true },
-          {
-            id: 2,
-            task: "每週六早上洗衣服",
-            done: false,
-          },
-          {
-            id: 3,
-            task: "每天晚上打給Julien",
-            done: false,
-          },
-        ],
-      },
+      // {
+      //   todoDate: "2022-11-01",
+      //   todo: [
+      //     { id: 1, task: "早上餵Boba", done: true },
+      //     {
+      //       id: 2,
+      //       task: "洗衣服",
+      //       done: false,
+      //     },
+      //   ],
+      // },
+      // {
+      //   todoDate: "2022-11-02",
+      //   todo: [
+      //     { id: 1, task: "買午餐", done: true },
+      //     {
+      //       id: 2,
+      //       task: "家樂福買雞腿",
+      //       done: false,
+      //     },
+      //   ],
+      // },
     ],
-    modelConfig: {
-      type: "string",
-      mask: "YYYY-MM-DD",
-    },
-    selectedDate: new Date(),
   },
   getters: {
-    //computed
-    //Getters 簡單說就是可以把 state 處理過後再丟出去的人
-    getTask(state) {
-      return state.todoList;
+    //可以把 state 丟出去的給其他地方使用
+   
+    getTodoList:state=>{
+      return state.todoList
     },
+    // getDate:state=>state.date
+ 
   },
   mutations: {
-    Loaded(state) {
-      // state的isLoading true/false 互轉
-      state.isLoading = !state.isLoading;
+    //同步
+    //可以處理 state 中的資訊
+    setCurrentDate(state,now){  //拿現在日期
+     state.nowDate=now   //now 從 calendarPart 傳遞過來
+     console.log(state.nowDate)
     },
+
+    getPickDate(state,pick){ //拿選擇的日期
+      state.pickDate=pick
+      console.log(state.pickDate)
+
+    }
+   
   },
-  actions: {},
+  actions: {
+    //異步
+    //用來呼叫 mutations 去處理 state
+  },
   modules: {},
-});
+})
+
 export default store;
