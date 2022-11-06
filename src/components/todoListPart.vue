@@ -1,6 +1,6 @@
 <template lang="">
   <!-- 新增任務 -->
-  <div><h1>Clara's TodoList</h1></div>
+  <div><h1>待辦事項</h1></div>
   <div>
     <!-- <p>日期：{{date}}</p> -->
     <form @submit.prevent="addNewTask">
@@ -29,7 +29,7 @@
         <li
         class="list-group-item d-flex justify-content-between align-items-center"
         v-for="mission in filterTodo"
-        :key="mission.taskName"  
+        :key="mission.task"  
       > 
       <!-- mission.id -->
       <!-- 從當日取出每個待辦事項 -->
@@ -39,8 +39,10 @@
             type="checkbox"
             value=""
             v-model="mission.done"
+            @click="missionStatus(mission.task)"
+            
           />
-          <!-- :id="mission.id"  -->
+          <!-- :id="mission.id"   -->
           
           <!-- 這邊只需要使用 v-model 而不用再處理 emit 是因為 array 是複雜屬性 傳址而非傳值（非複製一份資料）所以可以直接修改到原資料 -->
           <!-- id="flexCheckDefault" -->
@@ -102,6 +104,8 @@ export default {
     };
   },
 
+  // watch
+
   emits: ["changeReloadKey"],
 
   computed: {
@@ -150,11 +154,20 @@ export default {
           // console.log("觸發＋＋了");
           return this.$emit("changeReloadKey");
         }
-
-        // this.$store.commit("changeReloadKey");
-
-        // console.log(this.$store.state.todoList);
       }
+    },
+    missionStatus(taskName) {
+      let selectDate = this.$store.state.pickDate;
+      console.log(taskName);
+      console.log(this.filterTodo);
+      setTimeout(() => {
+        localStorage.setItem(selectDate, JSON.stringify(this.filterTodo)), 500;
+      });
+      setTimeout(() => {
+        this.$emit("changeReloadKey"), 1000;
+      });
+      console.log("更新成功");
+      // return ;
     },
     btnClick(index) {
       this.activeCode = index;
