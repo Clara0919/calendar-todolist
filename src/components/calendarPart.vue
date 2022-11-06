@@ -1,7 +1,7 @@
 <template lang="">
   <!-- <v-calendar /> -->
  <v-date-picker v-model="pickDate"  :model-config="modelConfig" />
- {{pickDate}}
+ <!-- {{pickDate}} -->
 </template>
 <script>
 import "v-calendar/dist/style.css";
