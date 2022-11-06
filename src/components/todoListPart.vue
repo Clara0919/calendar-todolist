@@ -102,7 +102,7 @@ export default {
     };
   },
 
-  watch: {},
+  emits: ["changeReloadKey"],
 
   computed: {
     filterTodo() {
@@ -119,12 +119,13 @@ export default {
 
   methods: {
     addNewTask() {
-      if (this.taskName === "") {
+      if (this.taskName == "") {
         return alert("任務欄位不得為空");
       } else {
         let selectDate = this.$store.state.pickDate;
         console.log("selectDate測試", selectDate);
-        if (localStorage.key(selectDate) == selectDate) {
+        if (localStorage.getItem(selectDate) !== null) {
+          //localStorage.key(selectDate) == selectDate
           console.log("這筆資料已存在");
           this.getTodo = JSON.parse(localStorage.getItem(selectDate));
           this.getTodo.push({
@@ -135,7 +136,9 @@ export default {
           });
           // console.log("getTodo 測試", this.getTodo);
           localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
+          return this.$emit("changeReloadKey");
         } else {
+          console.log("偵測到的key", localStorage.key(selectDate));
           this.getTodo = [
             {
               id: this.getTodo.length + 1,
@@ -144,7 +147,11 @@ export default {
             },
           ]; //getTodo 如果是 null 的話 沒辦法用 push
           localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
+          // console.log("觸發＋＋了");
+          return this.$emit("changeReloadKey");
         }
+
+        // this.$store.commit("changeReloadKey");
 
         // console.log(this.$store.state.todoList);
       }

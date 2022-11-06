@@ -24,8 +24,8 @@ export default {
     let day = new Date().getDate();
     day = day - 9 > 0 ? day : "0" + day;
 
-    this.nowDate = year + "-" + month + "-" + day;
-    return this.$store.commit("setCurrentDate", this.nowDate);
+    this.pickDate = year + "-" + month + "-" + day; //原本這裡是nowDate 但因為上面v-model的是pickDate 為了讓畫面一進來會顯是現在的日期，所以這裡改成pickDate
+    return this.$store.commit("setCurrentDate", this.pickDate);
   },
   updated() {
     return this.$store.commit("getPickDate", this.pickDate);

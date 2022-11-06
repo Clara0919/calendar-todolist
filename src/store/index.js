@@ -4,6 +4,7 @@ const store = new Vuex.Store({
   state: {
     nowDate:"",
     pickDate:"",
+    // reloadKey:0,
     todoList: [
       // {
       //   todoDate: "2022-11-01",
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
       // },
     ],
   },
+
   getters: {
     //可以把 state 丟出去的給其他地方使用
    
@@ -49,8 +51,12 @@ const store = new Vuex.Store({
     getPickDate(state,pick){ //拿選擇的日期
       state.pickDate=pick
       console.log(state.pickDate)
+    },
 
-    }
+    // changeReloadKey(state){
+    //   state.reloadKey+=1
+    //   console.log('reloadKey成功+1',state.reloadKey)
+    // }
    
   },
   actions: {
