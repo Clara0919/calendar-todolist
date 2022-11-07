@@ -1,6 +1,6 @@
 <template lang="">
   <!-- <v-calendar /> -->
- <v-date-picker v-model="pickDate"  :model-config="modelConfig" />
+ <v-date-picker v-model="pickDate"  :model-config="modelConfig" class="v-calendar" />
  <!-- {{pickDate}} -->
 </template>
 <script>
@@ -34,5 +34,40 @@ export default {
   computed: {},
 };
 </script>
-<style lang="">
+<style>
+.v-calendar {
+  border: none;
+  margin: 0px;
+  font-size: 20px;
+}
+
+/* 調整最上面那一條 */
+.vc-header {
+  padding: 50px;
+}
+
+/* 調整月份 */
+.vc-title {
+  font-size: 35px;
+}
+
+/* 調整選擇月份的左右箭頭 */
+.vc-svg-icon {
+  margin: 40px 0;
+}
+
+/* 調整星期幾 */
+.vc-weekday {
+  border-bottom: 1px solid var(--main-color-1);
+  font-size: 20px;
+  padding: 20px 0;
+  color: var(--main-color-1);
+  margin-bottom: 20px;
+}
+
+/* 調整日期數字 */
+.vc-day-content {
+  font-size: 17px;
+  margin: 20px;
+}
 </style>

@@ -1,38 +1,17 @@
 <template lang="">
-  <!-- 新增任務 -->
-  <div><h1>待辦事項</h1></div>
   <div>
-    <!-- <p>日期：{{date}}</p> -->
-    <form @submit.prevent="addNewTask">
-      <!--  -->
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">任務</span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="請填寫任務內容"
-          aria-label="Username"
-          aria-describedby="basic-addon1"
-          v-model.trim="taskName"
-          
-        />
-        <button type="submit" class="btn btn-primary" >新增</button>
-      </div>
-    </form>
+    <h1>Todo List</h1>
   </div>
-  
   <!-- 檢視任務 -->
   <div>
     <ul class="list-group">
-        <!-- <template  v-for="item in todoList">  -->
-          <!-- 分別取出每日的任務清單(一天是一組) -->
-        <li
+
+      <li
         class="list-group-item d-flex justify-content-between align-items-center"
         v-for="mission in filterTodo"
-        :key="mission.task"  
-      > 
-      <!-- mission.id -->
-      <!-- 從當日取出每個待辦事項 -->
+        :key="mission.task"
+      >
+      
         <div class="form-check">
           <input
             class="form-check-input"
@@ -40,28 +19,39 @@
             value=""
             v-model="mission.done"
             @click="missionStatus(mission.task)"
-            
           />
           <!-- :id="mission.id"   -->
-          
+
           <!-- 這邊只需要使用 v-model 而不用再處理 emit 是因為 array 是複雜屬性 傳址而非傳值（非複製一份資料）所以可以直接修改到原資料 -->
           <!-- id="flexCheckDefault" -->
-          <label
-            class="form-check-label"
-            :class="{ delete: mission.done }"
+          <label class="form-check-label" :class="{ delete: mission.done }"
             ><!-- for="flexCheckDefault" :for="item.todo.id" -->
             <!-- :class="item.done?'delete':''" -->
             {{ mission.task }}
           </label>
         </div>
-        <span class="badge bg-success rounded-pill" v-if="mission.done"
+        <span class="badge finished rounded-pill" v-if="mission.done"
           >已完成</span
         >
-        <span class="badge bg-warning rounded-pill" v-else>未完成</span>
+        <span class="badge unfinish rounded-pill" v-else>未完成</span>
       </li>
-           
-        <!-- </template> -->
-     
+          <!-- 新增任務 -->
+      <li>
+        <form @submit.prevent="addNewTask">
+          <div class="input-group mb-3">
+            <button type="submit" class="btn "><span>＋</span></button>
+            <!-- <span class="input-group-text" id="basic-addon1">任務</span> -->
+            <input
+              type="text"
+              class="form-control"
+              placeholder="新增待辦事項"
+            
+              aria-describedby="basic-addon1"
+              v-model.trim="taskName"
+            />
+          </div>
+        </form>
+      </li>
     </ul>
   </div>
 
@@ -190,16 +180,51 @@ export default {
 };
 </script>
 <style scoped>
-/* 新增任務 */
-
-.input-group {
-  width: 400px;
+h1 {
+  text-align: center;
+  font-size: 30px;
+  margin: 20px;
+  color: white;
 }
-/* 任務列表 */
+
 .list-group {
-  width: 400px;
+  margin: 0 20px;
 }
 
+li {
+  list-style: none;
+}
+
+.btn {
+  background-color: white;
+  border-top-left-radius: 0;
+  border: 1px solid #ced4da;
+  border-right: none;
+}
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ced4da;
+  border-left: none;
+}
+
+.form-control {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.finished {
+  background: var(--main-color-2);
+}
+
+.unfinish {
+  background: var(--main-color-3);
+}
 .delete {
   text-decoration: line-through;
   color: gray;
@@ -207,7 +232,7 @@ export default {
 }
 
 /* 任務篩選按鈕 */
-.btn-group {
+/* .btn-group {
   width: 400px;
-}
+} */
 </style>
