@@ -4,40 +4,13 @@ const store = new Vuex.Store({
   state: {
     nowDate:"",
     pickDate:"",
-    // reloadKey:0,
-    todoList: [
-      // {
-      //   todoDate: "2022-11-01",
-      //   todo: [
-      //     { id: 1, task: "早上餵Boba", done: true },
-      //     {
-      //       id: 2,
-      //       task: "洗衣服",
-      //       done: false,
-      //     },
-      //   ],
-      // },
-      // {
-      //   todoDate: "2022-11-02",
-      //   todo: [
-      //     { id: 1, task: "買午餐", done: true },
-      //     {
-      //       id: 2,
-      //       task: "家樂福買雞腿",
-      //       done: false,
-      //     },
-      //   ],
-      // },
-    ],
+    quotes:[],
   },
 
   getters: {
     //可以把 state 丟出去的給其他地方使用
-   
-    getTodoList:state=>{
-      return state.todoList
-    },
-    // getDate:state=>state.date
+    getQuotesData:state=>state.quotes,
+    getDate:state=>state.date
  
   },
   mutations: {
@@ -53,15 +26,33 @@ const store = new Vuex.Store({
       console.log(state.pickDate)
     },
 
-    // changeReloadKey(state){
-    //   state.reloadKey+=1
-    //   console.log('reloadKey成功+1',state.reloadKey)
-    // }
+    getQuotesData(state,data){
+      state.quotes=data
+      console.log('getQuotesData',state.quotes)
+      // .map(quote=>{
+      //   return {
+      //     text:quote.id,
+      //     author:quote.author
+      //   }
+      // })
+    }
+
+    
    
   },
   actions: {
     //異步
     //用來呼叫 mutations 去處理 state
+    fetchQuotes({ commit }){fetch("https://type.fit/api/quotes")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        commit('getQuotesData',data)
+      }).catch(error => {
+        console.log(error);
+      });}
   },
   modules: {},
 })

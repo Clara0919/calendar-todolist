@@ -1,4 +1,11 @@
-<template lang="">
+<template lang="" >
+  <div>
+    <p>{{getSelectDate}}</p>
+    <!-- <i class="fa-quotes"></i> -->
+    <p>{{getTodayQuote}}</p>
+    <!-- <i class="fa-quotes"></i> -->
+    
+  </div>
   <div>
     <h1>Todo List</h1>
   </div>
@@ -84,17 +91,26 @@
   </div> -->
 </template>
 <script>
-import { mapGetters } from "vuex"; //, mapActions
+// import { mapGetters } from "vuex"; //, mapActions
 export default {
   data() {
     return {
       activeCode: 0,
       taskName: "",
       getTodo: [],
+      // getQuote: [],
+      randomNum: 1,
+      // todayQuote: "",
     };
   },
 
-  // watch
+  watch: {
+    getSelectDate: function () {
+      console.log("日期變了");
+      this.randomNum = Math.floor(Math.random() * 1642 + 1);
+      console.log("隨機數測試", this.randomNum);
+    },
+  },
 
   emits: ["changeReloadKey"],
 
@@ -103,12 +119,24 @@ export default {
       let selectDate = this.$store.state.pickDate;
       return JSON.parse(localStorage.getItem(selectDate));
     },
-    ...mapGetters({
-      //...是展開運算符
-      //mapGetters 用來把 this.$store.getters.getTask 映射成 getTask
-      todoList: "getTodoList",
-      // date: "getDate",
-    }),
+
+    getTodayQuote() {
+      // let randomNum = Math.floor(Math.random() * 1642 + 1);
+      // console.log("隨機數測試", randomNum);
+      return this.$store.getters.getQuotesData[this.randomNum].text;
+    },
+
+    getSelectDate() {
+      let selectDate = this.$store.state.pickDate;
+      return selectDate;
+    },
+
+    // ...mapGetters({
+    //   //...是展開運算符
+    //   //mapGetters 用來把 this.$store.getters.getQuotesData 映射成 getQuote
+    //   // getQuote: "getQuotesData",
+    //   getSelectDate: "getDate",
+    // }),
   },
 
   methods: {
@@ -177,6 +205,18 @@ export default {
     //   }
     // },
   },
+  created() {
+    this.$store.dispatch("fetchQuotes");
+  },
+  mounted() {
+    // this.randomNum = Math.floor(Math.random() * 1642 + 1);
+    // console.log("隨機數測試", this.randomNum);
+    // this.todayQuote = this.getQuote[this.randomNum];
+    // console.log("getQuote 測試", this.getQuote);
+    // console.log("todayQuote 測試", this.todayQuote);
+    return;
+  },
+  updated() {},
 };
 </script>
 <style scoped>
