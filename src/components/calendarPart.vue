@@ -77,4 +77,9 @@ export default {
     margin: 10px;
   }
 }
+@media (max-width: 400px) {
+  .vc-day-content {
+    margin: 5px;
+  }
+}
 </style>
