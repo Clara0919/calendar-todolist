@@ -81,5 +81,13 @@ export default {
   .vc-day-content {
     margin: 0px;
   }
+  .vc-header {
+    padding: 30px;
+  }
+
+  /* 調整月份 */
+  .vc-title {
+    font-size: 25px;
+  }
 }
 </style>

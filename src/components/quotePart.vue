@@ -91,7 +91,7 @@ export default {
 @media (max-width: 576px) {
   .todayQuote {
     margin-top: 5px;
-    padding: 10px 0 25px;
+    padding: 10px 25px 0 25px;
   }
 }
 </style>
