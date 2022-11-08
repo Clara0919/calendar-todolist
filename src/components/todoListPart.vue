@@ -314,6 +314,15 @@ input:focus {
   font-style: italic;
 }
 
+@media (max-width: 576px) {
+  h1 {
+    margin: 0px 20px 20px;
+  }
+  .list-group {
+    margin: 0 30px 20px;
+  }
+}
+
 /* 任務篩選按鈕 */
 /* .btn-group {
   width: 400px;

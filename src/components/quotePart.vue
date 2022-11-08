@@ -3,7 +3,7 @@
     
     <p class="getSelectDate"><i class="fa-regular fa-calendar"></i> {{getSelectDate}}</p>
    
-    <p class="todayQuote"> <i class="fa-solid fa-quote-left quote-icon"></i>{{getTodayQuote}} <i class="fa-solid fa-quote-right quote-icon"></i></p>
+    <p class="todayQuote" :class="getTodayQuote.length>80?'smallQuote':''"> <i class="fa-solid fa-quote-left quote-icon"></i>{{getTodayQuote}} <i class="fa-solid fa-quote-right quote-icon"></i></p>
 
   </div>
 </template>
@@ -35,6 +35,10 @@ export default {
         this.$store.getters.getQuotesData[this.randomNum]
       );
       if (this.$store.getters.getQuotesData[this.randomNum]) {
+        console.log(
+          "Length測試",
+          this.$store.getters.getQuotesData[this.randomNum].text.length
+        );
         return this.$store.getters.getQuotesData[this.randomNum].text;
       } else {
         console.log("...");
@@ -50,7 +54,7 @@ export default {
 <style >
 .quoteBox {
   text-align: center;
-  margin: 20px 0px;
+  margin: 40px 0px 20px 0px;
 }
 
 .fa-calendar {
@@ -78,5 +82,16 @@ export default {
   font-size: 33px;
   margin: 10px 0 20px 0;
   padding: 20px 25px;
+}
+
+.smallQuote {
+  font-size: 28px;
+}
+
+@media (max-width: 576px) {
+  .todayQuote {
+    margin-top: 5px;
+    padding: 10px 0 25px;
+  }
 }
 </style>

@@ -37,8 +37,9 @@ export default {
 <style>
 .v-calendar {
   border: none;
-  margin: 0px;
+  margin: 0px !important;
   font-size: 20px;
+  max-width: 100%;
 }
 
 /* 調整最上面那一條 */
@@ -69,5 +70,11 @@ export default {
 .vc-day-content {
   font-size: 17px;
   margin: 20px;
+}
+
+@media (max-width: 1076px) {
+  .vc-day-content {
+    margin: 10px;
+  }
 }
 </style>
