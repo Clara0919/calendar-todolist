@@ -1,16 +1,17 @@
 <template lang="" >
-  <div>
-    <p>{{getSelectDate}}</p>
-    <!-- <i class="fa-quotes"></i> -->
-    <p>{{getTodayQuote}}</p>
-    <!-- <i class="fa-quotes"></i> -->
+  <!-- <div class="quoteBox">
     
-  </div>
+    <p class="getSelectDate"><i class="fa-regular fa-calendar"></i> {{getSelectDate}}</p>
+   
+    <p class="todayQuote"> <i class="fa-solid fa-quote-left quote-icon"></i>{{getTodayQuote}} <i class="fa-solid fa-quote-right quote-icon"></i></p>
+   
+    
+  </div> -->
   <div>
     <h1>Todo List</h1>
   </div>
   <!-- 檢視任務 -->
-  <div>
+  <div> 
     <ul class="list-group">
 
       <li
@@ -99,7 +100,7 @@ export default {
       taskName: "",
       getTodo: [],
       // getQuote: [],
-      randomNum: 1,
+      // randomNum: 0,
       // todayQuote: "",
     };
   },
@@ -120,16 +121,25 @@ export default {
       return JSON.parse(localStorage.getItem(selectDate));
     },
 
-    getTodayQuote() {
-      // let randomNum = Math.floor(Math.random() * 1642 + 1);
-      // console.log("隨機數測試", randomNum);
-      return this.$store.getters.getQuotesData[this.randomNum].text;
-    },
+    // getSelectDate() {
+    //   let selectDate = this.$store.state.pickDate;
+    //   return selectDate;
+    // },
 
-    getSelectDate() {
-      let selectDate = this.$store.state.pickDate;
-      return selectDate;
-    },
+    // getTodayQuote() {
+    //   // let randomNum = Math.floor(Math.random() * 1642 + 1);
+    //   // console.log("隨機數測試", randomNum);
+    //   console.log(
+    //     "測試getTodayQuote",
+    //     this.$store.getters.getQuotesData[this.randomNum]
+    //   );
+    //   if (this.$store.getters.getQuotesData[this.randomNum]) {
+    //     return this.$store.getters.getQuotesData[this.randomNum].text;
+    //   } else {
+    //     console.log("...");
+    //     return "...";
+    //   }
+    // },
 
     // ...mapGetters({
     //   //...是展開運算符
@@ -205,21 +215,54 @@ export default {
     //   }
     // },
   },
-  created() {
-    this.$store.dispatch("fetchQuotes");
-  },
-  mounted() {
-    // this.randomNum = Math.floor(Math.random() * 1642 + 1);
-    // console.log("隨機數測試", this.randomNum);
-    // this.todayQuote = this.getQuote[this.randomNum];
-    // console.log("getQuote 測試", this.getQuote);
-    // console.log("todayQuote 測試", this.todayQuote);
-    return;
-  },
-  updated() {},
+  // created() {
+  //   this.$store.dispatch("fetchQuotes");
+  // },
+  // mounted() {
+  // this.randomNum = Math.floor(Math.random() * 1642 + 1);
+  // console.log("隨機數測試", this.randomNum);
+  // this.todayQuote = this.getQuote[this.randomNum];
+  // console.log("getQuote 測試", this.getQuote);
+  // console.log("todayQuote 測試", this.todayQuote);
+  //   return;
+  // },
+  // updated() {},
 };
 </script>
-<style scoped>
+<style>
+/* .quoteBox {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.fa-calendar {
+  margin-right: 10px;
+}
+
+.getSelectDate {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0;
+}
+
+.quote-icon {
+  margin: 10px;
+  position: relative;
+  top: -10px;
+  font-size: 20px;
+  color: var(--main-color-1);
+}
+
+.todayQuote {
+  font-family: "Amatic SC", cursive;
+  font-family: "Amatic SC", cursive;
+  font-weight: 700;
+  font-size: 35px;
+  margin: 10px 0 20px 0;
+  padding: 20px 25px;
+} */
+/* todo list */
+
 h1 {
   text-align: center;
   font-size: 30px;

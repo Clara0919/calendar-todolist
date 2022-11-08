@@ -2,6 +2,7 @@
   <div class="container-fluid">
     <div class="row page">
       <div class="col-lg-5 col-md-5 col-sm-12 todoList">
+        <quotePart></quotePart>
         <todo-list-part
           @changeReloadKey="changeKey"
           :key="key"
@@ -17,9 +18,10 @@
 <script>
 import calendarPart from "../src/components/calendarPart.vue";
 import todoListPart from "../src/components/todoListPart.vue";
+import quotePart from "./components/quotePart.vue";
 
 export default {
-  components: { calendarPart, todoListPart },
+  components: { calendarPart, todoListPart, quotePart },
   data() {
     return {
       key: "",
