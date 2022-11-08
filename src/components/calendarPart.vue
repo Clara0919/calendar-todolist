@@ -1,6 +1,6 @@
 <template lang="">
   <!-- <v-calendar /> -->
- <v-date-picker v-model="pickDate"  :model-config="modelConfig" class="v-calendar" />
+ <v-date-picker v-model="pickDate"  :model-config="modelConfig" class="v-calendar" color="purple" />
  <!-- {{pickDate}} -->
 </template>
 <script>
