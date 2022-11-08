@@ -152,7 +152,7 @@ export default {
   methods: {
     addNewTask() {
       if (this.taskName == "") {
-        return alert("任務欄位不得為空");
+        return alert("待辦事項不得空白");
       } else {
         let selectDate = this.$store.state.pickDate;
         console.log("selectDate測試", selectDate);
@@ -271,7 +271,7 @@ h1 {
 }
 
 .list-group {
-  margin: 0 20px;
+  margin: 0 20px 20px 20px;
 }
 
 li {
@@ -286,12 +286,12 @@ li {
 }
 button:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 input:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: none !important;
   border-color: #ced4da;
   border-left: none;
 }
@@ -299,6 +299,12 @@ input:focus {
 .form-control {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* checkbox color */
+.form-check-input:checked {
+  border-color: var(--main-color-1);
+  background-color: var(--main-color-1);
 }
 
 .finished {
