@@ -325,7 +325,7 @@ input:focus {
     margin: 0px 20px 20px;
   }
   .list-group {
-    margin: 0 30px 20px;
+    margin: 0 0 30px 0px;
   }
 }
 
