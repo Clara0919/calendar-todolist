@@ -45,6 +45,10 @@ export default {
   --main-color-2: #878fc6;
   --main-color-3: #c3a9b4;
 }
+
+.container-fluid {
+  margin: auto;
+}
 .page {
   margin: 30px 20px;
   box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.45);
