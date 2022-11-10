@@ -284,8 +284,9 @@ button:focus {
 input:focus {
   outline: none;
   box-shadow: none !important;
-  border-color: #ced4da;
-  border-left: none;
+
+  border: 1px solid #ced4da !important;
+  border-left: none !important;
 }
 
 .form-control {
