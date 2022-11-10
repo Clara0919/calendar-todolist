@@ -38,10 +38,16 @@
             {{ mission.task }}
           </label>
         </div>
-        <span class="badge finished rounded-pill" v-if="mission.done"
+        <div class="missionStatus">
+          <span class="badge finished rounded-pill" v-if="mission.done"
           >已完成</span
         >
         <span class="badge unfinish rounded-pill" v-else>未完成</span>
+      </div>
+      <div> <i class="fa-solid fa-xmark" @click='remove(mission.task)'></i></div>
+       
+        
+       
       </li>
           <!-- 新增任務 -->
       <li>
@@ -197,9 +203,28 @@ export default {
       console.log("更新成功");
       // return ;
     },
-    btnClick(index) {
-      this.activeCode = index;
+    remove(task) {
+      let selectDate = this.$store.state.pickDate;
+      console.log("測試 task", task);
+      this.getTodo = JSON.parse(localStorage.getItem(selectDate));
+      console.log("測試 this.getTodo", this.getTodo);
+      const index = this.getTodo.findIndex((x) => x.task === task);
+      console.log("測試index", index);
+      if (index > -1) {
+        // 只有有找到才繼續執行
+        this.getTodo.splice(index, 1); // 第二個參數代表刪除一筆
+      }
+      // console.log(this.getTodo);
+      localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
+      setTimeout(() => {
+        this.$emit("changeReloadKey"), 1000;
+      });
+      console.log("更新成功");
     },
+
+    // btnClick(index) {
+    //   this.activeCode = index;
+    // },
     // selectTask() {
     //   switch (this.activeCode) {
     //     case 0:
@@ -230,39 +255,6 @@ export default {
 };
 </script>
 <style>
-/* .quoteBox {
-  text-align: center;
-  margin: 20px 0px;
-}
-
-.fa-calendar {
-  margin-right: 10px;
-}
-
-.getSelectDate {
-  font-weight: 700;
-  font-size: 18px;
-  margin: 0;
-}
-
-.quote-icon {
-  margin: 10px;
-  position: relative;
-  top: -10px;
-  font-size: 20px;
-  color: var(--main-color-1);
-}
-
-.todayQuote {
-  font-family: "Amatic SC", cursive;
-  font-family: "Amatic SC", cursive;
-  font-weight: 700;
-  font-size: 35px;
-  margin: 10px 0 20px 0;
-  padding: 20px 25px;
-} */
-/* todo list */
-
 h1 {
   text-align: center;
   font-size: 30px;
@@ -307,13 +299,22 @@ input:focus {
   background-color: var(--main-color-1);
 }
 
+.missionStatus {
+  margin: auto 10px auto auto;
+}
+
 .finished {
   background: var(--main-color-2);
+  text-align: center;
+  display: block;
 }
 
 .unfinish {
   background: var(--main-color-3);
+  text-align: center;
+  display: block;
 }
+
 .delete {
   text-decoration: line-through;
   color: gray;
