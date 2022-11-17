@@ -1,12 +1,4 @@
 <template lang="" >
-  <!-- <div class="quoteBox">
-    
-    <p class="getSelectDate"><i class="fa-regular fa-calendar"></i> {{getSelectDate}}</p>
-   
-    <p class="todayQuote"> <i class="fa-solid fa-quote-left quote-icon"></i>{{getTodayQuote}} <i class="fa-solid fa-quote-right quote-icon"></i></p>
-   
-    
-  </div> -->
   <div>
     <h1>To-Do List</h1>
   </div>
@@ -26,12 +18,10 @@
             type="checkbox"
             value=""
             v-model="mission.done"
-            @click="missionStatus(mission.task)"
+            @click="missionStatus()"
           />
-          <!-- :id="mission.id"   -->
-
           <!-- 這邊只需要使用 v-model 而不用再處理 emit 是因為 array 是複雜屬性 傳址而非傳值（非複製一份資料）所以可以直接修改到原資料 -->
-          <!-- id="flexCheckDefault" -->
+
           <label class="form-check-label" :class="{ delete: mission.done }"
             ><!-- for="flexCheckDefault" :for="item.todo.id" -->
             <!-- :class="item.done?'delete':''" -->
@@ -69,54 +59,14 @@
     </ul>
   </div>
 
-  <!-- 篩選任務 -->
-  <!-- <div class="btn-group mt-3" role="group" aria-label="Basic example">
-    <button
-      type="button"
-      class="btn"
-      :class="activeCode === 0 ? 'btn-primary' : 'btn-secondary'"
-      @click="btnClick(0)"
-    >
-      全部
-    </button>
-    <button
-      type="button"
-      class="btn"
-      :class="activeCode === 1 ? 'btn-primary' : 'btn-secondary'"
-      @click="btnClick(1)"
-    >
-      已完成
-    </button>
-    <button
-      type="button"
-      class="btn"
-      :class="activeCode === 2 ? 'btn-primary' : 'btn-secondary'"
-      @click="btnClick(2)"
-    >
-      未完成
-    </button>
-  </div> -->
 </template>
 <script>
-// import { mapGetters } from "vuex"; //, mapActions
 export default {
   data() {
     return {
-      activeCode: 0,
       taskName: "",
       getTodo: [],
-      // getQuote: [],
-      // randomNum: 0,
-      // todayQuote: "",
     };
-  },
-
-  watch: {
-    getSelectDate: function () {
-      console.log("日期變了");
-      this.randomNum = Math.floor(Math.random() * 1642 + 1);
-      console.log("隨機數測試", this.randomNum);
-    },
   },
 
   emits: ["changeReloadKey"],
@@ -126,33 +76,6 @@ export default {
       let selectDate = this.$store.state.pickDate;
       return JSON.parse(localStorage.getItem(selectDate));
     },
-
-    // getSelectDate() {
-    //   let selectDate = this.$store.state.pickDate;
-    //   return selectDate;
-    // },
-
-    // getTodayQuote() {
-    //   // let randomNum = Math.floor(Math.random() * 1642 + 1);
-    //   // console.log("隨機數測試", randomNum);
-    //   console.log(
-    //     "測試getTodayQuote",
-    //     this.$store.getters.getQuotesData[this.randomNum]
-    //   );
-    //   if (this.$store.getters.getQuotesData[this.randomNum]) {
-    //     return this.$store.getters.getQuotesData[this.randomNum].text;
-    //   } else {
-    //     console.log("...");
-    //     return "...";
-    //   }
-    // },
-
-    // ...mapGetters({
-    //   //...是展開運算符
-    //   //mapGetters 用來把 this.$store.getters.getQuotesData 映射成 getQuote
-    //   // getQuote: "getQuotesData",
-    //   getSelectDate: "getDate",
-    // }),
   },
 
   methods: {
@@ -163,7 +86,6 @@ export default {
         let selectDate = this.$store.state.pickDate;
         console.log("selectDate測試", selectDate);
         if (localStorage.getItem(selectDate) !== null) {
-          //localStorage.key(selectDate) == selectDate
           console.log("這筆資料已存在");
           this.getTodo = JSON.parse(localStorage.getItem(selectDate));
           this.getTodo.push({
@@ -172,9 +94,8 @@ export default {
             task: this.taskName,
             done: false,
           });
-          // console.log("getTodo 測試", this.getTodo);
           localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
-          return this.$emit("changeReloadKey");
+          return this.$emit("changeReloadKey"); //reload this component
         } else {
           console.log("偵測到的key", localStorage.key(selectDate));
           this.getTodo = [
@@ -185,31 +106,29 @@ export default {
             },
           ]; //getTodo 如果是 null 的話 沒辦法用 push
           localStorage.setItem(selectDate, JSON.stringify(this.getTodo));
-          // console.log("觸發＋＋了");
-          return this.$emit("changeReloadKey");
+          return this.$emit("changeReloadKey"); //reload this component
         }
       }
     },
-    missionStatus(taskName) {
+    missionStatus() {
       let selectDate = this.$store.state.pickDate;
-      console.log(taskName);
-      console.log(this.filterTodo);
+      // mission.done被改成 true 所以要重新存到 localStorage 裡
       setTimeout(() => {
         localStorage.setItem(selectDate, JSON.stringify(this.filterTodo)), 500;
       });
       setTimeout(() => {
         this.$emit("changeReloadKey"), 1000;
       });
-      console.log("更新成功");
+      // console.log("更新成功");
       // return ;
     },
     remove(task) {
       let selectDate = this.$store.state.pickDate;
-      console.log("測試 task", task);
-      this.getTodo = JSON.parse(localStorage.getItem(selectDate));
-      console.log("測試 this.getTodo", this.getTodo);
-      const index = this.getTodo.findIndex((x) => x.task === task);
-      console.log("測試index", index);
+      // console.log("測試 task", task);
+      this.getTodo = JSON.parse(localStorage.getItem(selectDate)); //先把資料拿出來
+      // console.log("測試 this.getTodo", this.getTodo);
+      const index = this.getTodo.findIndex((x) => x.task === task); //找到那筆資料的index
+      // console.log("測試index", index);
       if (index > -1) {
         // 只有有找到才繼續執行
         this.getTodo.splice(index, 1); // 第二個參數代表刪除一筆
@@ -221,37 +140,7 @@ export default {
       });
       console.log("更新成功");
     },
-
-    // btnClick(index) {
-    //   this.activeCode = index;
-    // },
-    // selectTask() {
-    //   switch (this.activeCode) {
-    //     case 0:
-    //       return this.todoList;
-    //     case 1:
-    //       return this.todoList.filter((x) => {
-    //         x.todo.done;
-    //       });
-    //     case 2:
-    //       return this.todoList.filter((x) => {
-    //         !x.todo.done;
-    //       });
-    //   }
-    // },
   },
-  // created() {
-  //   this.$store.dispatch("fetchQuotes");
-  // },
-  // mounted() {
-  // this.randomNum = Math.floor(Math.random() * 1642 + 1);
-  // console.log("隨機數測試", this.randomNum);
-  // this.todayQuote = this.getQuote[this.randomNum];
-  // console.log("getQuote 測試", this.getQuote);
-  // console.log("todayQuote 測試", this.todayQuote);
-  //   return;
-  // },
-  // updated() {},
 };
 </script>
 <style>

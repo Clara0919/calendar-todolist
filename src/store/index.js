@@ -26,8 +26,8 @@ const store = new Vuex.Store({
       console.log(state.pickDate)
     },
 
-    getQuotesData(state,data){
-      state.quotes=data
+    getQuotesData(state,data){  //把從 actions commit 過來的 data 存進 quotes 裡
+      state.quotes=data  
       console.log('getQuotesData',state.quotes)
       // .map(quote=>{
       //   return {
@@ -43,9 +43,9 @@ const store = new Vuex.Store({
   actions: {
     //異步
     //用來呼叫 mutations 去處理 state
-    fetchQuotes({ commit }){fetch("https://type.fit/api/quotes")
-      .then(function (response) {
-        return response.json();
+    fetchQuotes({ commit }){fetch("https://type.fit/api/quotes")  //commit 一個 mutation
+      .then(function (response) {  
+        return response.json();// read and parse the data using json()
       })
       .then(function (data) {
         console.log(data);

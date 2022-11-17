@@ -1,18 +1,17 @@
 <template lang="">
   <!-- <v-calendar /> -->
  <v-date-picker v-model="pickDate"  :model-config="modelConfig" class="v-calendar" color="purple" />
- <!-- {{pickDate}} -->
 </template>
 <script>
 import "v-calendar/dist/style.css";
 export default {
   data() {
     return {
-      nowDate: "",
+      // nowDate: "",
       pickDate: "",
       modelConfig: {
         type: "string",
-        mask: "YYYY-MM-DD", // Uses 'iso' if missing
+        mask: "YYYY-MM-DD", //取得日期的格式
       },
     };
   },
@@ -20,15 +19,15 @@ export default {
   mounted() {
     let year = new Date().getFullYear();
     let month = new Date().getMonth() + 1;
-    month = month - 9 > 0 ? month : "0" + month;
+    month = month - 9 > 0 ? month : "0" + month; //月份是個位數的話前面補0
     let day = new Date().getDate();
-    day = day - 9 > 0 ? day : "0" + day;
+    day = day - 9 > 0 ? day : "0" + day; 
 
     this.pickDate = year + "-" + month + "-" + day; //原本這裡是nowDate 但因為上面v-model的是pickDate 為了讓畫面一進來會顯是現在的日期，所以這裡改成pickDate
     return this.$store.commit("setCurrentDate", this.pickDate);
   },
   updated() {
-    return this.$store.commit("getPickDate", this.pickDate);
+    return this.$store.commit("getPickDate", this.pickDate); //把新選的日期傳到vuex裡面
   },
 
   computed: {},
